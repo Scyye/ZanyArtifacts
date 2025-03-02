@@ -6,7 +6,6 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -15,17 +14,15 @@ public class MenuCommand implements BasicCommand {
 	@Override
 	public void execute(@NotNull CommandSourceStack source, String @NotNull [] args) {
 		String menuId = args[0];
-		if (menuId == null)
-			return;
+		assert menuId != null;
 
 		Menu menu = Menu.allMenus.get(menuId);
-		if (menu == null)
-			return;
+		assert menu != null;
 
 		Player player = (Player) source.getExecutor();
+		assert player != null;
 
 		menu.buildInventory(player);
-
 		player.openInventory(menu.getInventory());
 	}
 

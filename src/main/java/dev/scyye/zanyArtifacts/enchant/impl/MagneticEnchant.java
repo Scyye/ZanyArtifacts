@@ -19,6 +19,7 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 
+@SuppressWarnings("UnstableApiUsage")
 public class MagneticEnchant extends ZanyEnchant {
 
 	/**
@@ -75,9 +76,7 @@ public class MagneticEnchant extends ZanyEnchant {
 		if (player.getInventory().getBoots() == null)
 			return;
 		player.getWorld().getNearbyEntitiesByType(Item.class, player.getLocation(), getLevel(player.getInventory().getBoots())*5).forEach(
-				item -> {
-					item.teleport(player.getLocation());
-				}
+				item -> item.teleport(player.getLocation())
 		);
 	}
 }

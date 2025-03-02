@@ -14,8 +14,6 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.util.Buildable;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -134,7 +132,7 @@ public abstract class ZanyItem {
 							TextColor.color(0xE30008))));
 			abilityLore.add(Component.text(description,
 					TextColor.color(0x7f7f7f)));
-			abilityLore.add(Component.text("Cooldown: " + CooldownHandler.Cooldown.round(cooldownMs/1000, 2) + "s",
+			abilityLore.add(Component.text("Cooldown: " + Utils.round(cooldownMs/1000, 2) + "s",
 					TextColor.color(0xe32110)));
 			return abilityLore;
 		}
@@ -146,21 +144,21 @@ public abstract class ZanyItem {
 
 	public abstract void onItemCreate(ItemStack var1);
 
-	public abstract boolean leftClickAirAction(Player var1, ItemStack var2);
+	public abstract void leftClickAirAction(Player var1, ItemStack var2);
 
-	public abstract boolean shiftLeftClickAirAction(Player var1, ItemStack var2);
+	public abstract void shiftLeftClickAirAction(Player var1, ItemStack var2);
 
-	public abstract boolean leftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
+	public abstract void leftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
 
-	public abstract boolean shiftLeftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
+	public abstract void shiftLeftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
 
-	public abstract boolean rightClickAirAction(Player var1, ItemStack var2);
+	public abstract void rightClickAirAction(Player var1, ItemStack var2);
 
-	public abstract boolean shiftRightClickAirAction(Player var1, ItemStack var2);
+	public abstract void shiftRightClickAirAction(Player var1, ItemStack var2);
 
-	public abstract boolean rightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
+	public abstract void rightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
 
-	public abstract boolean shiftRightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
+	public abstract void shiftRightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4);
 
 	public ItemStack getRawItem() {
 		return this.itemStack;

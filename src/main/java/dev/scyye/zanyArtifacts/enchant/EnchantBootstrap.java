@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Set;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "unused"})
 public class EnchantBootstrap implements PluginBootstrap {
 	@Override
 	public void bootstrap(@NotNull BootstrapContext context) {
@@ -52,9 +52,8 @@ public class EnchantBootstrap implements PluginBootstrap {
 
 		context.getLifecycleManager().registerEventHandler(LifecycleEvents.TAGS.preFlatten(RegistryKey.ENCHANTMENT).newHandler((event) -> {
 			for (ZanyEnchant enchant : zanyEnchants) {
-				enchant.getEnchantTagKeys().forEach(enchantmentTagKey -> {
-					event.registrar().addToTag(enchantmentTagKey, Set.of(enchant.getTagEntry()));
-				});
+				enchant.getEnchantTagKeys().forEach(enchantmentTagKey ->
+						event.registrar().addToTag(enchantmentTagKey, Set.of(enchant.getTagEntry())));
 			}
 		}));
 	}

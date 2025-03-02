@@ -32,20 +32,18 @@ public class Gun extends ZanyItem implements ZanyBow {
 	}
 
 
-	public boolean onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
+	public void onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
 		this.setAmmo(this.getAmmo() - 1);
 		player.sendMessage("Current Ammo: " + this.getAmmo());
 		if (this.getAmmo() < 0) {
 			player.sendMessage("Reload by left clicking!");
-			player.getInventory().addItem(new ItemStack[]{new ItemStack(Material.ARROW, 1)});
+			player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 			event.setCancelled(true);
 		}
 
-		return true;
 	}
 
-	public boolean onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {
-		return false;
+	public void onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {
 	}
 
 	public void onItemCreate(ItemStack itemStack) {
@@ -62,40 +60,33 @@ public class Gun extends ZanyItem implements ZanyBow {
 
 	public int getAmmo() {
 		PersistentDataContainer data = this.getRawItem().getItemMeta().getPersistentDataContainer();
-		Integer ammo = (Integer)data.get(this.key, PersistentDataType.INTEGER);
-		return (Integer)Objects.requireNonNullElse(ammo, 0);
+		Integer ammo = data.get(this.key, PersistentDataType.INTEGER);
+		return Objects.requireNonNullElse(ammo, 0);
 	}
 
-	public boolean leftClickAirAction(Player player, ItemStack itemStack) {
+	public void leftClickAirAction(Player player, ItemStack itemStack) {
 		this.setAmmo(6);
-		return true;
 	}
 
-	public boolean shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return this.leftClickAirAction(player, itemStack);
+	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
+		this.leftClickAirAction(player, itemStack);
 	}
 
-	public boolean shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean rightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void rightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean shiftRightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 }

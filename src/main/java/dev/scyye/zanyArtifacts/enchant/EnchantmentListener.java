@@ -4,7 +4,6 @@ import java.util.*;
 import javax.annotation.Nullable;
 
 import dev.scyye.zanyArtifacts.SuperList;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +16,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.projectiles.ProjectileSource;
-import dev.scyye.zanyArtifacts.Main;
 
+@SuppressWarnings("unused")
 public class EnchantmentListener implements Listener {
 	public EnchantmentListener() {
 	}
@@ -32,7 +30,7 @@ public class EnchantmentListener implements Listener {
 			return;
 
 		ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
-		ZanyEnchant[] itemEnchants = this.getZanyEnchants(heldItem);
+		ZanyEnchant[] itemEnchants = getZanyEnchants(heldItem);
 
 		for (ZanyEnchant enchant : itemEnchants)
 			if (enchant != null)
@@ -44,7 +42,7 @@ public class EnchantmentListener implements Listener {
 		List<ZanyEnchant> inventoryEnchants = new ArrayList<>();
 
 		for (ItemStack item : event.getPlayer().getInventory()) {
-			ZanyEnchant[] itemEnchants = this.getZanyEnchants(item);
+			ZanyEnchant[] itemEnchants = getZanyEnchants(item);
 
 			for (ZanyEnchant enchant : itemEnchants)
 				if (enchant != null)
@@ -103,7 +101,7 @@ public class EnchantmentListener implements Listener {
 			return;
 
 
-		for (ZanyEnchant enchant : this.getZanyEnchants(event.getBow()))
+		for (ZanyEnchant enchant : getZanyEnchants(event.getBow()))
 			if (enchant instanceof ZanyBowEnchant bowEnchant)
 				bowEnchant.onShootBow(event.getBow(), event, (Player) event.getEntity());
 	}

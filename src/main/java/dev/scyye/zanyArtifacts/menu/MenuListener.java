@@ -1,7 +1,6 @@
 package dev.scyye.zanyArtifacts.menu;
 
 import dev.scyye.zanyArtifacts.Main;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

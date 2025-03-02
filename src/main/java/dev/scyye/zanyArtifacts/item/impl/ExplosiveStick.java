@@ -23,40 +23,32 @@ public class ExplosiveStick extends ZanyItem {
 	public void onItemCreate(ItemStack itemStack) {
 	}
 
-	public boolean leftClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void leftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
+	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 		player.getWorld().createExplosion(block.getLocation(), 6.0F, false, true);
-		return true;
 	}
 
-	public boolean shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean rightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void rightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean shiftRightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
+	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 		this.leftClickBlockAction(player, event, block, itemStack);
 		ItemStack newItem = itemStack.clone();
 		newItem.setAmount(itemStack.getAmount() - 1);
 		player.getInventory().setItemInMainHand(newItem);
-		return true;
 	}
 
-	public boolean shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 }

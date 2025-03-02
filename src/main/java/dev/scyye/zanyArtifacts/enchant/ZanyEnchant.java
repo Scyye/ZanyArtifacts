@@ -37,6 +37,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
+import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -151,10 +152,12 @@ public abstract class ZanyEnchant {
 		return value;
 	}
 
+	@Subst("enchant_id")
 	public String getId() {
 		return this.display.content().toLowerCase().replaceAll(" ", "_");
 	}
 
+	@Subst("zany:id")
 	@NotNull
 	protected Key getKey() {
 		return Key.key("zany:" + getId());

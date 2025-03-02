@@ -11,7 +11,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
 public interface ZanyBow {
-	boolean onShoot(ItemStack var1, EntityShootBowEvent var2, Player var3);
+	void onShoot(ItemStack var1, EntityShootBowEvent var2, Player var3);
 
-	boolean onLand(boolean var1, ItemStack var2, ProjectileHitEvent var3, Player var4);
+	void onLand(boolean var1, ItemStack var2, ProjectileHitEvent var3, Player var4);
 }

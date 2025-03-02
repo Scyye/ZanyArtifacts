@@ -7,14 +7,10 @@ package dev.scyye.zanyArtifacts.enchant.impl;
 
 
 import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
-import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
 import io.papermc.paper.registry.tag.TagKey;
-import io.papermc.paper.tag.TagEntry;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -30,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("UnstableApiUsage")
 public class TestEnchant extends ZanyEnchant {
 
 	/**
@@ -78,7 +75,8 @@ public class TestEnchant extends ZanyEnchant {
 
 	@Override
 	public void onKillEntity(Entity var1, ItemStack var2, EntityDamageEvent.DamageCause var3, EntityDeathEvent event) {
-		event.getDamageSource().getCausingEntity().sendMessage("kill entity");
+		if (event.getDamageSource().getCausingEntity() != null)
+			event.getDamageSource().getCausingEntity().sendMessage("kill entity");
 	}
 
 	@Override

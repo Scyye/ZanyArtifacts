@@ -6,7 +6,6 @@
 package dev.scyye.zanyArtifacts.item;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,12 +26,11 @@ public class ZanyRecipe {
 		this.item = item;
 	}
 
-	public ZanyRecipe setIndex(int index, ItemStack item) {
+	public void setIndex(int index, ItemStack item) {
 		this.recipe.set(index, item);
-		return this;
 	}
 
-	public ZanyRecipe setRecipe(ItemStack... itemStacks) {
+	public void setRecipe(ItemStack... itemStacks) {
 		List<ItemStack> finalRecipe = new ArrayList<>();
 
 		for(int i = 0; i < 9 && i < itemStacks.length; ++i) {
@@ -69,6 +67,5 @@ public class ZanyRecipe {
 			Bukkit.addRecipe(shapelessRecipe);
 		}
 
-		return this;
 	}
 }

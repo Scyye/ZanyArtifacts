@@ -26,44 +26,34 @@ public class TeleportBow extends ZanyItem implements ZanyBow {
 	public void onItemCreate(ItemStack itemStack) {
 	}
 
-	public boolean leftClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void leftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean rightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void rightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean shiftRightClickAirAction(Player player, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public boolean rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		return false;
+	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
-	public boolean onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
-		return false;
+	public void onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
 	}
 
-	public boolean onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {
+	public void onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {
 		player.teleport(event.getEntity().getLocation().setDirection(player.getLocation().getDirection()));
-		return true;
 	}
 }

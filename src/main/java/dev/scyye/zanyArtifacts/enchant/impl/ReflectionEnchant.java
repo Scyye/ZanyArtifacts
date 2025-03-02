@@ -16,11 +16,10 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ReflectionEnchant extends ZanyEnchant {
 	/**
 	 * Constructor for ZanyEnchant, do not use this constructor directly, use a subclass of ZanyEnchant

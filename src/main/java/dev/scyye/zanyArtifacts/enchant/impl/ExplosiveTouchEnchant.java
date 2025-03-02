@@ -18,6 +18,7 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ExplosiveTouchEnchant extends ZanyEnchant {
 
 	/**

@@ -5,8 +5,6 @@
 
 package dev.scyye.zanyArtifacts.item;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,10 +72,9 @@ public class ItemListener implements Listener {
 
 	@EventHandler
 	private void playerShootEvent(EntityShootBowEvent event) {
-		LivingEntity var3 = event.getEntity();
-		if (!Utils.isZany(event.getBow()))
+		if (event.getBow() == null || !Utils.isZany(event.getBow()))
 			return;
-		if (var3 instanceof Player player) {
+		if (event.getEntity() instanceof Player player) {
 			ZanyBow zanyBow = (ZanyBow)Utils.getZany(event.getBow());
 			if (zanyBow != null) {
 				zanyBow.onShoot(event.getBow(), event, player);

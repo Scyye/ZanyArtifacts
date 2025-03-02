@@ -12,10 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import dev.scyye.zanyArtifacts.Main;
 import dev.scyye.zanyArtifacts.item.ZanyItem;
 @Deprecated(forRemoval = true)
 public class GiveMenu {
@@ -25,7 +23,7 @@ public class GiveMenu {
 
 	public GiveMenu() {
 		this.invName = ChatColor.BOLD + "GiveGUI";
-		this.inv = Bukkit.createInventory((InventoryHolder)null, 54, this.invName);
+		this.inv = Bukkit.createInventory(null, 54, this.invName);
 	}
 
 	public void openInv(Player player) {
@@ -50,7 +48,7 @@ public class GiveMenu {
 
 		j = 0;
 
-		for(Iterator var3 = ZanyItem.allItems.values().iterator(); var3.hasNext(); ++j) {
+		for(Iterator<ZanyItem> var3 = ZanyItem.allItems.values().iterator(); var3.hasNext(); ++j) {
 			ZanyItem zanyItem = (ZanyItem)var3.next();
 			this.inv.setItem(j, zanyItem.createItem());
 		}

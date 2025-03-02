@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemType;
 
 import java.util.Arrays;
 
+@SuppressWarnings("UnstableApiUsage")
 public class FasterFallingEnchant extends ZanyEnchant {
 
 

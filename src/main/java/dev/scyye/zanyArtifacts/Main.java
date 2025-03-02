@@ -1,7 +1,5 @@
 package dev.scyye.zanyArtifacts;
 
-import java.util.HashMap;
-
 import dev.scyye.zanyArtifacts.command.GiveCommand;
 import dev.scyye.zanyArtifacts.command.MenuCommand;
 import dev.scyye.zanyArtifacts.enchant.impl.*;
@@ -18,7 +16,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Tag;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -79,8 +76,8 @@ public class Main extends JavaPlugin {
 	public void registerItems() {
 		ZanyItem testItem = new TestItem("test_item", new ItemStack(Material.IRON_AXE), 1, "Super Cool Test Item", true, new EnchantmentData[]{new EnchantmentData(Enchantment.SHARPNESS, 2)}, new AttributeData[0], new ItemFlag[0], new String[]{"&6This is super cool lore", "&5And here's another line!"}, new ZanyItem.AbilityMeta[0]);
 		(new ZanyRecipe(true, testItem)).setRecipe(new ItemStack(Material.STRING), new ItemStack(Material.STRING), new ItemStack(Material.STRING), new ItemStack(Material.AIR), new ItemStack(Material.STICK), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.STICK), new ItemStack(Material.AIR));
-		ZanyItem explosiveStick = new ExplosiveStick("explosive_stick", new ItemStack(Material.TORCH), 1, "&cExplosive Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4Hitting a Block Will", "&4Cause a Mighty Explosion"}, new ZanyItem.AbilityMeta[0]);
-		ZanyItem technobladeSword = new TechnobladeSword("technoblade_sword", new ItemStack(Material.GOLDEN_SWORD), 1, "&bTechnoblade &6Sword", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Uses the power of &6THE BLADE", "&7to summon pigmen when you", "&7left click!", "&7Right click to remove them", "", "&6R.I.P Your Majesty."}, new ZanyItem.AbilityMeta[]{
+		new ExplosiveStick("explosive_stick", new ItemStack(Material.TORCH), 1, "&cExplosive Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4Hitting a Block Will", "&4Cause a Mighty Explosion"}, new ZanyItem.AbilityMeta[0]);
+		new TechnobladeSword("technoblade_sword", new ItemStack(Material.GOLDEN_SWORD), 1, "&bTechnoblade &6Sword", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Uses the power of &6THE BLADE", "&7to summon pigmen when you", "&7left click!", "&7Right click to remove them", "", "&6R.I.P Your Majesty."}, new ZanyItem.AbilityMeta[]{
 				new ZanyItem.AbilityMeta(
 						"summon_pigmen",
 						"Summon Pigmen",
@@ -98,10 +95,10 @@ public class Main extends JavaPlugin {
 						0
 				)
 		});
-		ZanyItem gun = new Gun("gun", new ItemStack(Material.BOW), 1, "&7&lTHE RETURN OF THE GUN", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Left click to reload", "&2Max ammo: 6"}, new ZanyItem.AbilityMeta[0]);
-		ZanyItem teleportBow = new TeleportBow("teleport_bow", new ItemStack(Material.BOW), 1, "&dTeleport Bow", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Teleport to where the arrow lands!"}, new ZanyItem.AbilityMeta[0]);
-		ZanyItem kamikazeStick = new KamikazeStick("kamikaze_stick", new ItemStack(Material.STICK), 1, "&4Kamikaze Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4click a block to kamikaze yo ass"}, new ZanyItem.AbilityMeta[0]);
-		ZanyItem flashBang = new FlashBang("flash_bang", new ItemStack(Material.SOUL_LANTERN), 6, "&fFlash Bang", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, new String[]{"&2Click anywhere to flashbang people in a 5 block radius"}, new ZanyItem.AbilityMeta[0]);
+		new Gun("gun", new ItemStack(Material.BOW), 1, "&7&lTHE RETURN OF THE GUN", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Left click to reload", "&2Max ammo: 6"}, new ZanyItem.AbilityMeta[0]);
+		new TeleportBow("teleport_bow", new ItemStack(Material.BOW), 1, "&dTeleport Bow", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Teleport to where the arrow lands!"}, new ZanyItem.AbilityMeta[0]);
+		new KamikazeStick("kamikaze_stick", new ItemStack(Material.STICK), 1, "&4Kamikaze Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4click a block to kamikaze yo ass"}, new ZanyItem.AbilityMeta[0]);
+		new FlashBang("flash_bang", new ItemStack(Material.SOUL_LANTERN), 6, "&fFlash Bang", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, new String[]{"&2Click anywhere to flashbang people in a 5 block radius"}, new ZanyItem.AbilityMeta[0]);
 
 		for (ZanyItem item : ZanyItem.allItems.values()) {
 			item.updateLore();
@@ -109,7 +106,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void registerEnchants() {
-		ZanyEnchant testEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				TestEnchant.class,
 				Component.text("Test Enchant"),
 				3,
@@ -117,7 +114,7 @@ public class Main extends JavaPlugin {
 				new TagKey[]{ItemTypeTagKeys.SWORDS},
 				null
 		);
-		ZanyEnchant explosiveTouch = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				ExplosiveTouchEnchant.class,
 				Component.text("Explosive Touch"),
 				7,
@@ -126,7 +123,7 @@ public class Main extends JavaPlugin {
 				new TagKey[]{EnchantmentTagKeys.ON_MOB_SPAWN_EQUIPMENT}
 		);
 
-		ZanyEnchant magneticEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				MagneticEnchant.class,
 				Component.text("Magnetic"),
 				5,
@@ -135,7 +132,7 @@ public class Main extends JavaPlugin {
 				new TagKey[]{EnchantmentTagKeys.TREASURE}
 		);
 
-		ZanyEnchant fasterFallingEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				FasterFallingEnchant.class,
 				Component.text("Faster Falling"),
 				5,
@@ -144,7 +141,7 @@ public class Main extends JavaPlugin {
 				null
 		);
 
-		ZanyEnchant groundSlamEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				GroundSlamEnchant.class,
 				Component.text("Ground Slam"),
 				5,
@@ -153,7 +150,7 @@ public class Main extends JavaPlugin {
 				new TagKey[]{EnchantmentTagKeys.TRADES_PLAINS_COMMON}
 		);
 
-		ZanyEnchant reflectEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				ReflectionEnchant.class,
 				Component.text("Reflection"),
 				3,
@@ -162,7 +159,7 @@ public class Main extends JavaPlugin {
 				null
 		);
 
-		ZanyEnchant murderEnchant = ZanyEnchant.createBasicEnchant(
+		ZanyEnchant.createBasicEnchant(
 				MurderEnchant.class,
 				Component.text("Murder"),
 				1,

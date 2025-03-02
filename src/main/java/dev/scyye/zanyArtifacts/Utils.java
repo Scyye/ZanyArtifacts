@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -56,12 +58,21 @@ public class Utils {
 		return ZanyItem.allItems.get(itemStack.getItemMeta().getPersistentDataContainer().get(Main.getKey("id"), PersistentDataType.STRING));
 	}
 
+	@Deprecated(forRemoval = true)
 	public static void loreItem(ItemStack itemStack, List<String> lore) {
+		List<TextComponent> loreComponents = lore.stream().map(Component::text).toList();
 		ItemMeta itemMeta = itemStack.getItemMeta();
 
 		assert itemMeta != null;
 
-		itemMeta.setLore(lore);
+		itemMeta.lore(loreComponents);
 		itemStack.setItemMeta(itemMeta);
+	}
+
+	public static float round(double value, int places) {
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (float) tmp / factor;
 	}
 }

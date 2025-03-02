@@ -30,6 +30,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+@SuppressWarnings("UnstableApiUsage")
 public class MurderEnchant extends ZanyEnchant {
 
 	/**

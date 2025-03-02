@@ -22,13 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+@Deprecated
 public class GroundSlamEnchant extends ZanyEnchant {
 
 	// Tracks the starting Y-coordinates of players who are falling
 	private static final HashMap<UUID, Double> fallingPlayers = new HashMap<>();
-
-	// Minimum fall distance to trigger an action
-	private final double FALL_THRESHOLD = 5.0;
 
 	/**
 	 * Constructor for ZanyEnchant, do not use this constructor directly, use a subclass of ZanyEnchant
@@ -77,6 +75,8 @@ public class GroundSlamEnchant extends ZanyEnchant {
 				double fallDistance = startY - to.getY();
 
 				// Trigger an action if the fall distance exceeds the threshold
+				// Minimum fall distance to trigger an action
+				double FALL_THRESHOLD = 5.0;
 				if (fallDistance >= FALL_THRESHOLD) {
 					player.sendMessage("You just fell " + fallDistance + " blocks!");
 					// Additional logic here, e.g., apply damage or effects

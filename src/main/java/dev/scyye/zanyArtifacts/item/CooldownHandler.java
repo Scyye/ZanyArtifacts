@@ -1,5 +1,6 @@
 package dev.scyye.zanyArtifacts.item;
 
+import dev.scyye.zanyArtifacts.Utils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -12,16 +13,11 @@ import java.util.UUID;
 
 public class CooldownHandler {
 	public static double trim(double untrimmeded, int decimal) {
-		String format = "#.#";
-
-		for(int i = 1; i < decimal; i++) {
-			format = format + "#";
-		}
-		DecimalFormat twoDec = new DecimalFormat(format);
+		DecimalFormat twoDec = new DecimalFormat("#.#" + "#".repeat(Math.max(0, decimal - 1)));
 		return Double.parseDouble(twoDec.format(untrimmeded));
 	}
 
-	public static enum TimeUnit {
+	public enum TimeUnit {
 		BEST,
 		DAYS,
 		HOURS,
@@ -47,7 +43,7 @@ public class CooldownHandler {
 		public HashMap<String, AbilityCooldown> cooldownMap = new HashMap<>();
 
 		public String ability = "";
-		public UUID player = null;
+		public UUID player;
 		public long millis;
 		public long systime;
 
@@ -106,13 +102,6 @@ public class CooldownHandler {
 			cPlayer.sendMessage(ChatColor.GRAY + "You can now use " + ChatColor.AQUA + ability);
 		}
 
-		protected static float round(double value, int places) {
-			long factor = (long) Math.pow(10, places);
-			value = value * factor;
-			long tmp = Math.round(value);
-			return (float) tmp / factor;
-		}
-
 		public static void handleCooldowns() {
 			if(cooldownPlayers.isEmpty()) {
 				return;
@@ -125,7 +114,7 @@ public class CooldownHandler {
 					double remainingSeconds = getRemaining(key, name)/1000;
 					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent
 							(ChatColor.GRAY + name + " Cooldown " + (remainingSeconds*1000) +
-									ChatColor.RED + round(remainingSeconds, 2) + "ms"));
+									ChatColor.RED + Utils.round(remainingSeconds, 2) + "ms"));
 					if (getRemaining(key, name) <= 0.0) {
 						removeCooldown(key, name);
 						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent());

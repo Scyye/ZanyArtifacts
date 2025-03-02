@@ -23,50 +23,42 @@ public class FlashBang extends ZanyItem {
 	}
 
 	@Override
-	public boolean leftClickAirAction(Player player, ItemStack var2) {
+	public void leftClickAirAction(Player player, ItemStack var2) {
 		player.getLocation().getNearbyPlayers(5).forEach(p -> p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 5, true, false, false)));
-		return false;
 	}
 
 	@Override
-	public boolean shiftLeftClickAirAction(Player var1, ItemStack var2) {
+	public void shiftLeftClickAirAction(Player var1, ItemStack var2) {
 		leftClickAirAction(var1, var2);
-		return false;
 	}
 
 	@Override
-	public boolean leftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
+	public void leftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
 		leftClickAirAction(var1, var4);
-		return false;
 	}
 
 	@Override
-	public boolean shiftLeftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
+	public void shiftLeftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
 		leftClickAirAction(var1, var4);
-		return false;
 	}
 
 	@Override
-	public boolean rightClickAirAction(Player var1, ItemStack var2) {
+	public void rightClickAirAction(Player var1, ItemStack var2) {
 		leftClickAirAction(var1, var2);
-		return false;
 	}
 
 	@Override
-	public boolean shiftRightClickAirAction(Player var1, ItemStack var2) {
+	public void shiftRightClickAirAction(Player var1, ItemStack var2) {
 		leftClickAirAction(var1, var2);
-		return false;
 	}
 
 	@Override
-	public boolean rightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
+	public void rightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
 		leftClickAirAction(var1, var4);
-		return false;
 	}
 
 	@Override
-	public boolean shiftRightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
+	public void shiftRightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
 		leftClickAirAction(var1, var4);
-		return false;
 	}
 }
