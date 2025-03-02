@@ -1,0 +1,15 @@
+name: ZanyArtifacts
+version: '1.0'
+main: dev.scyye.zanyArtifacts.Main
+api-version: '1.21'
+bootstrapper: dev.scyye.zanyArtifacts.enchant.EnchantBootstrap
+prefix: '[ZANY]'
+authors: [ Scyye, Dark_Joe ]
+description: Adds some custom items to minecraft
+permissions:
+  zany.give.command:
+    description: "Allows the player to use the /zanygive command"
+    default: op
+  zany.give.gui:
+    description: "Allows the player to use the /guigive command"
+    default: op
