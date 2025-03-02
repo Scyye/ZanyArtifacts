@@ -5,32 +5,93 @@
 
 package dev.scyye.zanyArtifacts.enchant.impl;
 
-/*
+
+import dev.scyye.zanyArtifacts.Main;
+import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
+import io.papermc.paper.registry.tag.TagKey;
+import net.kyori.adventure.text.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+
 public class MurderEnchant extends ZanyEnchant {
-	public MurderEnchant(String key, String name, int maxLevel, int startLevel, EnchantmentTarget itemTarget, Enchantment[] conflicts, Material[] whitelist, boolean curse, boolean zanyOnly) {
-		super(key, name, maxLevel, startLevel, itemTarget, conflicts, whitelist, curse, zanyOnly);
+
+	/**
+	 * Constructor for ZanyEnchant, do not use this constructor directly, use a subclass of ZanyEnchant
+	 * <p>
+	 * To create a new enchantment, create a new class that extends ZanyEnchant and implement the abstract methods
+	 * Then, in the main class, create a new instance of the enchantment and add it to the enchantIds map
+	 * <p>
+	 * The {@code ZanyEnchant#primaryItemTags} field defaults to the supportedItemTags field, but can be overridden with the
+	 * {@code ZanyEnchant#setPrimaryItemTags} method
+	 *
+	 * @param display           The way the enchantment appears in item lore
+	 * @param anvilCost         (0-inf) The cost to apply the enchantment in an anvil
+	 * @param maxLevel          (1-255) The maximum level of the enchantment
+	 * @param weight            (1-1024) The likelihood of the enchantment appearing in the enchantment table
+	 * @param minCost           The minimum cost to apply the enchantment in an anvil
+	 * @param maxCost           The maximum cost to apply the enchantment in an anvil
+	 * @param increasePerLevel  The cost increase per level of the enchantment
+	 * @param activeSlots       The slots the enchantment will be active in
+	 * @param supportedItemTags The tags of items that can be enchanted with this enchantment
+	 * @param enchantmentTags   The metadata of the enchantment
+	 */
+	public MurderEnchant(TextComponent display, int anvilCost, int maxLevel, int weight, int minCost, int maxCost, int increasePerLevel, EquipmentSlotGroup[] activeSlots, TagKey<ItemType>[] supportedItemTags, TagKey<Enchantment>[] enchantmentTags) {
+		super(display, anvilCost, maxLevel, weight, minCost, maxCost, increasePerLevel, activeSlots, supportedItemTags, enchantmentTags);
 	}
 
-	public void onBreakBlock(Block block, ItemStack itemStack, BlockBreakEvent event) {
+	@Override
+	public void constantEffect(Player entity, ItemStack item) {
+
 	}
 
+	@Override
+	public void onBreakBlock(Block block, ItemStack item, BlockBreakEvent event) {
+
+	}
+
+	@Override
 	public void onMove(PlayerMoveEvent event, Location location) {
+
 	}
 
-	public void onHitEntity(Entity entity, ItemStack itemStack, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
+	@Override
+	public void onHitEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
+
 	}
 
-	public void onKillEntity(Entity entity, ItemStack itemStack, EntityDamageEvent.DamageCause cause, EntityDeathEvent event) {
+	@Override
+	public void onKillEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDeathEvent event) {
+
 	}
 
-	public void onGetHit(LivingEntity damager, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
-		damager.sendMessage("You fool.");
-		damager.setInvulnerable(true);
-		damager.setVelocity(new Vector(0, 0, 0));
-		damager.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, false, false, false));
-		damager.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 3, false, false, false));
-		damager.getWorld().spawnEntity(damager.getLocation(), EntityType.FIREWORK, true);
-		(new 1(this, damager)).runTaskLater(Main.plugin, 195L);
-		damager.setInvulnerable(false);
+	@Override
+	public void onGetHit(LivingEntity entity, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
+		if (!(event.getDamager() instanceof Player player)) return;
+		player.sendMessage("You fool.");
+		player.setInvulnerable(true);
+		player.setVelocity(new Vector(0, 0, 0));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, false, false, false));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 3, false, false, false));
+		player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK_ROCKET, true);
+		Bukkit.getScheduler().runTaskLater(Main.plugin, () ->
+				player.damage(Double.MAX_VALUE), 195L);
+		player.setInvulnerable(false);
 	}
-}*/
+}

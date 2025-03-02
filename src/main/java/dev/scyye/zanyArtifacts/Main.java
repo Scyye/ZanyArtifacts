@@ -27,14 +27,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.scyye.zanyArtifacts.enchant.EnchantmentListener;
 import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
-import dev.scyye.zanyArtifacts.menu.EnchantMenuListener;
-import dev.scyye.zanyArtifacts.menu.GiveMenuListener;
 
 import static dev.scyye.zanyArtifacts.enchant.EnchantmentListener.getZanyEnchants;
 
 @SuppressWarnings("UnstableApiUsage")
 public class Main extends JavaPlugin {
+	@Deprecated(forRemoval = true)
 	public static HashMap<String, ZanyItem> itemIds = new HashMap<>();
+	@Deprecated(forRemoval = true)
 	public static HashMap<String, ZanyEnchant> enchantIds = new HashMap<>();
 	public static HashMap<String, Menu> menuIds = new HashMap<>();
 	public static Main plugin;
@@ -47,14 +47,11 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new ItemListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new EnchantmentListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new MenuListener(), plugin);
-		//Bukkit.getPluginManager().registerEvents(new GiveMenuListener(), plugin);
-		//Bukkit.getPluginManager().registerEvents(new EnchantMenuListener(), plugin);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
 				event -> event.registrar().register("zanygive", new GiveCommand())
 		);
-		//getServer().getPluginCommand("guigive").setExecutor(new GiveMenuCommand());
 
 		this.registerItems();
 
@@ -192,19 +189,26 @@ public class Main extends JavaPlugin {
 				new TagKey[]{ItemTypeTagKeys.ENCHANTABLE_ARMOR},
 				null
 		);
-		//ZanyEnchant murderEnchant = new MurderEnchant("murder_enchant", "Murder", 1, 1, EnchantmentTarget.ARMOR, Enchantment.values(), new Material[0], false, false);
-		//ZanyEnchant aquaphobicEnchant = new AquaphobicEnchant("aquaphobic_enchant", "Aquaphobic", 1, 1, EnchantmentTarget.ALL, new Enchantment[0], new Material[0], true, false);
-		//ZanyEnchant lifestealEnchant = new LifestealEnchant("lifesteal_enchant", "Lifesteal", 3, 1, EnchantmentTarget.WEAPON, new Enchantment[0], new Material[0], false, false);
+		ZanyEnchant murderEnchant = new MurderEnchant(
+				Component.text("Murder"),
+				0,
+				1,
+				0,
+				0,
+				0,
+				0,
+				new EquipmentSlotGroup[]{ EquipmentSlotGroup.ARMOR },
+				new TagKey[]{ ItemTypeTagKeys.ENCHANTABLE_ARMOR},
+				new TagKey[]{ EnchantmentTagKeys.TREASURE}
+		);
+
 		Main.enchantIds.put(testEnchant.getId(), testEnchant);
 		Main.enchantIds.put(explosiveTouch.getId(), explosiveTouch);
 		Main.enchantIds.put(magneticEnchant.getId(), magneticEnchant);
 		Main.enchantIds.put(fasterFallingEnchant.getId(), fasterFallingEnchant);
 		Main.enchantIds.put(groundSlamEnchant.getId(), groundSlamEnchant);
 		Main.enchantIds.put(reflectEnchant.getId(), reflectEnchant);
-		//Main.enchantIds.put(groundSlamEnchant.id, groundSlamEnchant);
-		//Main.enchantIds.put(murderEnchant.getKey().getKey(), murderEnchant);
-		//Main.enchantIds.put(aquaphobicEnchant.getKey().getKey(), aquaphobicEnchant);
-		//Main.enchantIds.put(lifestealEnchant.getKey().getKey(), lifestealEnchant);
+		Main.enchantIds.put(murderEnchant.getId(), murderEnchant);
 	}
 
 	public static void registerMenus() {
