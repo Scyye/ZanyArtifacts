@@ -6,6 +6,7 @@
 package dev.scyye.zanyArtifacts.enchant;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,15 +42,17 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class ZanyEnchant {
+	public static HashMap<String, ZanyEnchant> allEnchants = new HashMap<>();
+
 	@Getter TextComponent display;
 
-	@Getter int maxLevel = 5;
-	@Getter int weight = 0;
+	@Getter int maxLevel = 1;
+	@Getter int weight = 1;
 
 	@Getter int anvilCost = 0;
-	int minCost = 1;
-	int maxCost = 10;
-	@Getter int increasePerLevel = 3;
+	int minCost = 0;
+	int maxCost = 0;
+	@Getter int increasePerLevel = 0;
 
 	EquipmentSlotGroup[] activeSlots = new EquipmentSlotGroup[] {EquipmentSlotGroup.HAND};
 
@@ -81,15 +84,57 @@ public abstract class ZanyEnchant {
 					   int maxCost, int increasePerLevel, EquipmentSlotGroup[] activeSlots,
 					   TagKey<ItemType>[] supportedItemTags, TagKey<Enchantment>[] enchantmentTags) {
 		this.display = display;
-		this.anvilCost = anvilCost;
-		this.maxLevel = maxLevel;
-		this.weight = weight;
-		this.minCost = minCost;
-		this.maxCost = maxCost;
+		this.anvilCost = orElse(anvilCost, 0);
+		this.maxLevel = orElse(maxLevel, 1);
+		this.weight = orElse(weight, 1);
+		this.minCost = orElse(minCost, 0);
+		this.maxCost = orElse(maxCost, 0);
 		this.increasePerLevel = increasePerLevel;
 		this.activeSlots = orElse(activeSlots, new EquipmentSlotGroup[] {EquipmentSlotGroup.HAND});
 		this.supportedItemTags = orElse(supportedItemTags, new TagKey[] {ItemTypeTagKeys.SWORDS});
 		this.enchantmentTags = orElse(enchantmentTags, new TagKey[] {EnchantmentTagKeys.create(Key.key("zany:zany_only"))});
+
+		allEnchants.put(getId(), this);
+	}
+
+	public static <T extends ZanyEnchant> T createBasicEnchant(Class<T> type, TextComponent display, int maxLevel, @Nullable EquipmentSlotGroup[] activeSlots,
+																	@Nullable TagKey<ItemType>[] supportedItemTags, @Nullable TagKey<Enchantment>[] enchantmentTags) {
+		try {
+			return type.getConstructor(TextComponent.class, int.class, int.class, int.class, int.class, int.class, int.class,
+					EquipmentSlotGroup[].class, TagKey[].class, TagKey[].class)
+					.newInstance(display, -1, maxLevel, -1, -1, -1, -1, activeSlots, supportedItemTags, enchantmentTags);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) emptyEnchant();
+		}
+	}
+
+	private static ZanyEnchant emptyEnchant() {
+		return new ZanyEnchant(Component.text("Empty"), 0, 1, 1, 0, 0, 0, new EquipmentSlotGroup[] {EquipmentSlotGroup.HAND}, new TagKey[] {ItemTypeTagKeys.SWORDS}, new TagKey[] {EnchantmentTagKeys.create(Key.key("zany:zany_only"))}) {
+			@Override
+			public void onBreakBlock(Block block, ItemStack item, BlockBreakEvent event) {
+			}
+
+			@Override
+			public void onMove(PlayerMoveEvent event, Location location) {
+			}
+
+			@Override
+			public void onHitEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
+			}
+
+			@Override
+			public void onKillEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDeathEvent event) {
+			}
+
+			@Override
+			public void onGetHit(LivingEntity entity, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
+			}
+
+			@Override
+			public void constantEffect(Player entity, ItemStack item) {
+			}
+		};
 	}
 
 	private <T> T[] orElse(@Nullable T[] value, @Nonnull T[] defaultValue) {

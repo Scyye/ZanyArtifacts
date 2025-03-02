@@ -135,7 +135,7 @@ public class EnchantmentListener implements Listener {
 		if (!itemStack.getItemMeta().hasEnchants())
 			return new ZanyEnchant[0];
 
-		for (ZanyEnchant zanyEnchant : Main.enchantIds.values())
+		for (ZanyEnchant zanyEnchant : ZanyEnchant.allEnchants.values())
 			itemEnchants.addIf(zanyEnchant,
 					itemStack.getEnchantments().keySet().stream().anyMatch(enchantment ->
 							enchantment.getKey().equals(zanyEnchant.getKey())));

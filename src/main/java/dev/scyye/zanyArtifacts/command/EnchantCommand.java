@@ -22,6 +22,7 @@ import dev.scyye.zanyArtifacts.Main;
 import dev.scyye.zanyArtifacts.Utils;
 import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
 
+@Deprecated(forRemoval = true)
 public class EnchantCommand implements TabExecutor {
 	private static final TreeMap<Integer, String> map = new TreeMap();
 
@@ -83,7 +84,7 @@ public class EnchantCommand implements TabExecutor {
 	}
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-		return args.length > 1 ? Utils.getNumberArgs(args[1]) : Main.plugin.enchantIds.keySet().stream().toList();
+		return args.length > 1 ? Utils.getNumberArgs(args[1]) : ZanyEnchant.allEnchants.keySet().stream().toList();
 	}
 
 	static {

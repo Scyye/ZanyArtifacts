@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import dev.scyye.zanyArtifacts.menu.GiveMenu;
 
+@Deprecated(forRemoval = true)
 public class GiveMenuCommand implements CommandExecutor {
 	public GiveMenuCommand() {
 	}

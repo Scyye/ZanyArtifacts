@@ -22,8 +22,6 @@ import org.bukkit.projectiles.ProjectileSource;
 import dev.scyye.zanyArtifacts.Utils;
 
 public class ItemListener implements Listener {
-	public static List<ZanyItem> allItems = new ArrayList();
-
 	public ItemListener() {
 	}
 
@@ -47,27 +45,27 @@ public class ItemListener implements Listener {
 		if (item != null) {
 			if (event.getAction() == Action.LEFT_CLICK_AIR) {
 				if (!player.isSneaking()) {
-					if (item.leftClickAirAction(player, itemStack)) {
-					}
-				} else if (item.shiftLeftClickAirAction(player, itemStack)) {
+					item.leftClickAirAction(player, itemStack);
+				} else {
+					item.shiftLeftClickAirAction(player, itemStack);
 				}
 			} else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (!player.isSneaking()) {
-					if (item.leftClickBlockAction(player, event, event.getClickedBlock(), itemStack)) {
-					}
-				} else if (item.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), itemStack)) {
+					item.leftClickBlockAction(player, event, event.getClickedBlock(), itemStack);
+				} else {
+					item.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), itemStack);
 				}
 			} else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
 				if (!player.isSneaking()) {
-					if (item.rightClickAirAction(player, itemStack)) {
-					}
-				} else if (item.shiftRightClickAirAction(player, itemStack)) {
+					item.rightClickAirAction(player, itemStack);
+				} else {
+					item.shiftRightClickAirAction(player, itemStack);
 				}
 			} else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				if (!player.isSneaking()) {
-					if (item.rightClickBlockAction(player, event, event.getClickedBlock(), itemStack)) {
-					}
-				} else if (item.shiftRightClickBlockAction(player, event, event.getClickedBlock(), itemStack)) {
+					item.rightClickBlockAction(player, event, event.getClickedBlock(), itemStack);
+				} else {
+					item.shiftRightClickBlockAction(player, event, event.getClickedBlock(), itemStack);
 				}
 			}
 		}

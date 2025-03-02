@@ -20,9 +20,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Menu {
+	public static HashMap<String, Menu> allMenus = new HashMap<>();
 	@Getter
 	private final InventoryType type;
 	@Getter
@@ -83,7 +85,4 @@ public abstract class Menu {
 	}
 
 	public abstract void interact(InventoryClickEvent event);
-
-
-
 }

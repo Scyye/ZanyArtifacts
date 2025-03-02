@@ -12,7 +12,7 @@ import java.util.Objects;
 public class MenuListener implements Listener {
 	@EventHandler
 	public void onInventoryInteract(InventoryClickEvent event) {
-		for (var menu : Main.menuIds.values()) {
+		for (var menu : Menu.allMenus.values()) {
 			if (event.getCurrentItem() == null)
 				return;
 			if (Objects.equals(event.getCurrentItem().getItemMeta().getPersistentDataContainer()

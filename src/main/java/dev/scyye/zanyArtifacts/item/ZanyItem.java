@@ -7,6 +7,7 @@ package dev.scyye.zanyArtifacts.item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import lombok.Getter;
@@ -27,6 +28,8 @@ import dev.scyye.zanyArtifacts.Utils;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ZanyItem {
+	public static HashMap<String, ZanyItem> allItems = new HashMap<>();
+
 	ItemStack itemStack;
 	int amount;
 	String displayName;
@@ -54,6 +57,7 @@ public abstract class ZanyItem {
 		this.lore = lore;
 		this.abilities = abilities;
 		this.createItem();
+		allItems.put(this.id, this);
 	}
 
 	public ItemStack createItem() {
@@ -81,9 +85,8 @@ public abstract class ZanyItem {
 		}
 
 		meta.lore(lore);
-		meta.getPersistentDataContainer().set(new NamespacedKey(Main.plugin, "id"), PersistentDataType.STRING, this.id);
+		meta.getPersistentDataContainer().set(Main.getKey("id"), PersistentDataType.STRING, this.id);
 		this.itemStack.setItemMeta(meta);
-		ItemListener.allItems.add(this);
 		this.onItemCreate(this.itemStack);
 		return this.itemStack;
 	}

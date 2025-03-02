@@ -50,7 +50,7 @@ public class GiveMenu {
 
 		j = 0;
 
-		for(Iterator var3 = Main.plugin.itemIds.values().iterator(); var3.hasNext(); ++j) {
+		for(Iterator var3 = ZanyItem.allItems.values().iterator(); var3.hasNext(); ++j) {
 			ZanyItem zanyItem = (ZanyItem)var3.next();
 			this.inv.setItem(j, zanyItem.createItem());
 		}

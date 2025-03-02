@@ -28,19 +28,19 @@ public class GiveCommand implements BasicCommand {
 		if (!(source.getSender() instanceof Player player)) {
 			return;
 		}
-		if (!Main.plugin.itemIds.containsKey(args[0])) {
+		if (!ZanyItem.allItems.containsKey(args[0])) {
 			player.sendMessage("Item '" + args[0] + "' doesn't exist, are you sure you spelt it correctly?");
 		}
 
-		Utils.givePlayerItemSafely(player, Main.plugin.itemIds.get(args[0]).createItem());
+		Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(args[0]).createItem());
 	}
 
 	@Override
 	public Collection<String> suggest(CommandSourceStack source, String[] args) {
 		if (args.length==0) {
-			return Main.plugin.itemIds.keySet();
+			return ZanyItem.allItems.keySet();
 		}
-		return Main.plugin.itemIds.keySet().stream()
+		return ZanyItem.allItems.keySet().stream()
 				.filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toSet());
 	}
 

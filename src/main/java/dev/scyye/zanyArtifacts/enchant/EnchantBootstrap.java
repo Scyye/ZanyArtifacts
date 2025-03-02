@@ -18,7 +18,7 @@ public class EnchantBootstrap implements PluginBootstrap {
 	@Override
 	public void bootstrap(@NotNull BootstrapContext context) {
 		Main.registerEnchants();
-		Collection<ZanyEnchant> zanyEnchants = Main.enchantIds.values();
+		Collection<ZanyEnchant> zanyEnchants = ZanyEnchant.allEnchants.values();
 
 		context.getLifecycleManager().registerEventHandler(LifecycleEvents.TAGS.preFlatten(RegistryKey.ITEM).newHandler((event) -> {
 			for (ZanyEnchant enchant : zanyEnchants) {

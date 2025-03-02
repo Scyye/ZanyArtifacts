@@ -2,6 +2,7 @@ package dev.scyye.zanyArtifacts.menu.impl;
 
 import dev.scyye.zanyArtifacts.Main;
 import dev.scyye.zanyArtifacts.Utils;
+import dev.scyye.zanyArtifacts.item.ZanyItem;
 import dev.scyye.zanyArtifacts.menu.Menu;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
@@ -20,7 +21,7 @@ public class GiveMenu extends Menu {
 
 	@Override
 	public void init(Player player) {
-		for (var entry : Main.itemIds.entrySet()) {
+		for (var entry : ZanyItem.allItems.entrySet()) {
 			var item = entry.getValue();
 			ItemStack menuItem = item.createItem();
 			menuItem.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.plugin, "menu"),
@@ -45,7 +46,7 @@ public class GiveMenu extends Menu {
 			String[] data = clickedItem.getItemMeta().getPersistentDataContainer()
 					.get(new NamespacedKey(Main.plugin, "menu"), org.bukkit.persistence.PersistentDataType.STRING).split("-");
 			if (data[0].equals("give")) {
-				Utils.givePlayerItemSafely(player, Main.plugin.itemIds.get(data[1]).createItem());
+				Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(data[1]).createItem());
 				event.setCancelled(true);
 			}
 		}

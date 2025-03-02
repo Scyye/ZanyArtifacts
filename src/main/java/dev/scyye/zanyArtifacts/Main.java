@@ -3,6 +3,7 @@ package dev.scyye.zanyArtifacts;
 import java.util.HashMap;
 
 import dev.scyye.zanyArtifacts.command.GiveCommand;
+import dev.scyye.zanyArtifacts.command.MenuCommand;
 import dev.scyye.zanyArtifacts.enchant.impl.*;
 import dev.scyye.zanyArtifacts.item.*;
 import dev.scyye.zanyArtifacts.item.impl.*;
@@ -32,11 +33,6 @@ import static dev.scyye.zanyArtifacts.enchant.EnchantmentListener.getZanyEnchant
 
 @SuppressWarnings("UnstableApiUsage")
 public class Main extends JavaPlugin {
-	@Deprecated(forRemoval = true)
-	public static HashMap<String, ZanyItem> itemIds = new HashMap<>();
-	@Deprecated(forRemoval = true)
-	public static HashMap<String, ZanyEnchant> enchantIds = new HashMap<>();
-	public static HashMap<String, Menu> menuIds = new HashMap<>();
 	public static Main plugin;
 
 	public void onEnable() {
@@ -50,7 +46,10 @@ public class Main extends JavaPlugin {
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-				event -> event.registrar().register("zanygive", new GiveCommand())
+				event -> {
+					event.registrar().register("zanygive", new GiveCommand());
+					event.registrar().register("menu", new MenuCommand());
+				}
 		);
 
 		this.registerItems();
@@ -103,123 +102,85 @@ public class Main extends JavaPlugin {
 		ZanyItem teleportBow = new TeleportBow("teleport_bow", new ItemStack(Material.BOW), 1, "&dTeleport Bow", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Teleport to where the arrow lands!"}, new ZanyItem.AbilityMeta[0]);
 		ZanyItem kamikazeStick = new KamikazeStick("kamikaze_stick", new ItemStack(Material.STICK), 1, "&4Kamikaze Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4click a block to kamikaze yo ass"}, new ZanyItem.AbilityMeta[0]);
 		ZanyItem flashBang = new FlashBang("flash_bang", new ItemStack(Material.SOUL_LANTERN), 6, "&fFlash Bang", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, new String[]{"&2Click anywhere to flashbang people in a 5 block radius"}, new ZanyItem.AbilityMeta[0]);
-		itemIds.put(testItem.getId(), testItem);
-		itemIds.put(explosiveStick.getId(), explosiveStick);
-		itemIds.put(technobladeSword.getId(), technobladeSword);
-		itemIds.put(gun.getId(), gun);
-		itemIds.put(teleportBow.getId(), teleportBow);
-		itemIds.put(kamikazeStick.getId(), kamikazeStick);
-		itemIds.put(flashBang.getId(), flashBang);
 
-		for (ZanyItem item : itemIds.values()) {
+		for (ZanyItem item : ZanyItem.allItems.values()) {
 			item.updateLore();
 		}
 	}
 
 	public static void registerEnchants() {
-		ZanyEnchant testEnchant = new TestEnchant(
+		ZanyEnchant testEnchant = ZanyEnchant.createBasicEnchant(
+				TestEnchant.class,
 				Component.text("Test Enchant"),
-				15,
 				3,
-				500,
-				10,
-				30,
-				5,
-				new EquipmentSlotGroup[]{ EquipmentSlotGroup.ANY },
+				new EquipmentSlotGroup[]{EquipmentSlotGroup.ANY},
 				new TagKey[]{ItemTypeTagKeys.SWORDS},
-				new TagKey[0]
+				null
 		);
-		ZanyEnchant explosiveTouch = new ExplosiveTouchEnchant(
+		ZanyEnchant explosiveTouch = ZanyEnchant.createBasicEnchant(
+				ExplosiveTouchEnchant.class,
 				Component.text("Explosive Touch"),
-				20,
 				7,
-				100,
-				20,
-				50,
-				6,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.ANY},
 				new TagKey[]{ItemTypeTagKeys.SWORDS, ItemTypeTagKeys.AXES, ItemTypeTagKeys.PICKAXES, ItemTypeTagKeys.HOES, ItemTypeTagKeys.SHOVELS, ItemTypeTagKeys.ENCHANTABLE_SWORD, ItemTypeTagKeys.ENCHANTABLE_WEAPON, ItemTypeTagKeys.ENCHANTABLE_MINING},
 				new TagKey[]{EnchantmentTagKeys.ON_MOB_SPAWN_EQUIPMENT}
 		);
-		ZanyEnchant magneticEnchant = new MagneticEnchant(
+
+		ZanyEnchant magneticEnchant = ZanyEnchant.createBasicEnchant(
+				MagneticEnchant.class,
 				Component.text("Magnetic"),
 				5,
-				5,
-				1000,
-				5,
-				10,
-				0,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.FEET},
 				new TagKey[]{ItemTypeTagKeys.FOOT_ARMOR, ItemTypeTagKeys.ENCHANTABLE_FOOT_ARMOR},
 				new TagKey[]{EnchantmentTagKeys.TREASURE}
 		);
-		ZanyEnchant fasterFallingEnchant = new FasterFallingEnchant(
+
+		ZanyEnchant fasterFallingEnchant = ZanyEnchant.createBasicEnchant(
+				FasterFallingEnchant.class,
 				Component.text("Faster Falling"),
-				5,
-				5,
-				1,
-				10,
-				20,
 				5,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.FEET},
 				new TagKey[]{ItemTypeTagKeys.FOOT_ARMOR, ItemTypeTagKeys.ENCHANTABLE_FOOT_ARMOR},
-				new TagKey[0]
+				null
 		);
-		ZanyEnchant groundSlamEnchant = new GroundSlamEnchant(
+
+		ZanyEnchant groundSlamEnchant = ZanyEnchant.createBasicEnchant(
+				GroundSlamEnchant.class,
 				Component.text("Ground Slam"),
-				0,
-				5,
-				1,
-				0,
-				5,
 				5,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.FEET},
 				new TagKey[]{ItemTypeTagKeys.FOOT_ARMOR, ItemTypeTagKeys.ENCHANTABLE_FOOT_ARMOR},
 				new TagKey[]{EnchantmentTagKeys.TRADES_PLAINS_COMMON}
 		);
-		ZanyEnchant reflectEnchant = new ReflectionEnchant(
+
+		ZanyEnchant reflectEnchant = ZanyEnchant.createBasicEnchant(
+				ReflectionEnchant.class,
 				Component.text("Reflection"),
-				0,
 				3,
-				1,
-				0,
-				0,
-				0,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.ARMOR},
 				new TagKey[]{ItemTypeTagKeys.ENCHANTABLE_ARMOR},
 				null
 		);
-		ZanyEnchant murderEnchant = new MurderEnchant(
+
+		ZanyEnchant murderEnchant = ZanyEnchant.createBasicEnchant(
+				MurderEnchant.class,
 				Component.text("Murder"),
-				0,
 				1,
-				0,
-				0,
-				0,
-				0,
 				new EquipmentSlotGroup[]{ EquipmentSlotGroup.ARMOR },
 				new TagKey[]{ ItemTypeTagKeys.ENCHANTABLE_ARMOR},
 				new TagKey[]{ EnchantmentTagKeys.TREASURE}
 		);
-
-		Main.enchantIds.put(testEnchant.getId(), testEnchant);
-		Main.enchantIds.put(explosiveTouch.getId(), explosiveTouch);
-		Main.enchantIds.put(magneticEnchant.getId(), magneticEnchant);
-		Main.enchantIds.put(fasterFallingEnchant.getId(), fasterFallingEnchant);
-		Main.enchantIds.put(groundSlamEnchant.getId(), groundSlamEnchant);
-		Main.enchantIds.put(reflectEnchant.getId(), reflectEnchant);
-		Main.enchantIds.put(murderEnchant.getId(), murderEnchant);
 	}
 
 	public static void registerMenus() {
 		Menu giveMenu = new GiveMenu(
 				InventoryType.CHEST,
-				"Zany Artifacts",
+				"Item GUI",
 				true,
 				null
 		);
 
-		menuIds.put(giveMenu.getId(), giveMenu);
+		Menu.allMenus.put(giveMenu.getId(), giveMenu);
 	}
 
 	public static NamespacedKey getKey(String key) {

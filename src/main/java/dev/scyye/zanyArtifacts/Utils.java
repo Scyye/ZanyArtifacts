@@ -49,11 +49,11 @@ public class Utils {
 	}
 
 	public static boolean isZany(ItemStack itemStack) {
-		return itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(Main.plugin, "id"), PersistentDataType.STRING);
+		return itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(Main.getKey("id"), PersistentDataType.STRING);
 	}
 
 	public static ZanyItem getZany(ItemStack itemStack) {
-		return Main.plugin.itemIds.get(itemStack.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Main.plugin, "id"), PersistentDataType.STRING));
+		return ZanyItem.allItems.get(itemStack.getItemMeta().getPersistentDataContainer().get(Main.getKey("id"), PersistentDataType.STRING));
 	}
 
 	public static void loreItem(ItemStack itemStack, List<String> lore) {
