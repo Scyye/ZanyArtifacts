@@ -43,6 +43,9 @@ public class ZanyRecipe {
 			}
 		}
 
+		var rec = new RecipeManager.Recipe(this.item.getId(), finalRecipe.stream().map(ItemStack::getType).map(Material::name).toArray(String[]::new), this.item.getId(), this.shaped, this.item.getAmount());
+		RecipeManager.addRecipe(rec);
+		return;/*
 		int i;
 		if (this.shaped) {
 			ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(Main.plugin, "recipe_" + this.item.getId()), this.item.createItem());
@@ -64,8 +67,7 @@ public class ZanyRecipe {
 				shapelessRecipe.addIngredient(new RecipeChoice.ExactChoice(itemStacks[i]));
 			}
 
-			Bukkit.addRecipe(shapelessRecipe);
-		}
-
+			//Bukkit.addRecipe(shapelessRecipe);
+		}*/
 	}
 }

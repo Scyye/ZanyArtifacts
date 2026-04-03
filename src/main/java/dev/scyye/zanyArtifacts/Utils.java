@@ -16,10 +16,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import dev.scyye.zanyArtifacts.item.ZanyItem;
 
+@SuppressWarnings("unused")
 public class Utils {
 	public Utils() {
 	}
@@ -58,21 +60,21 @@ public class Utils {
 		return ZanyItem.allItems.get(itemStack.getItemMeta().getPersistentDataContainer().get(Main.getKey("id"), PersistentDataType.STRING));
 	}
 
-	@Deprecated(forRemoval = true)
-	public static void loreItem(ItemStack itemStack, List<String> lore) {
-		List<TextComponent> loreComponents = lore.stream().map(Component::text).toList();
-		ItemMeta itemMeta = itemStack.getItemMeta();
-
-		assert itemMeta != null;
-
-		itemMeta.lore(loreComponents);
-		itemStack.setItemMeta(itemMeta);
-	}
-
 	public static float round(double value, int places) {
 		long factor = (long) Math.pow(10, places);
 		value = value * factor;
 		long tmp = Math.round(value);
 		return (float) tmp / factor;
+	}
+
+	public static ItemStack[] getZanyItemsFromInventory(PlayerInventory inventory, String id) {
+		List<ItemStack> items = new ArrayList<>();
+		for (ItemStack itemStack : inventory.getContents()) {
+			if (itemStack == null) continue;
+			if (Utils.isZany(itemStack) && Utils.getZany(itemStack).getId().equals(id)) {
+				items.add(itemStack);
+			}
+		}
+		return items.toArray(new ItemStack[0]);
 	}
 }

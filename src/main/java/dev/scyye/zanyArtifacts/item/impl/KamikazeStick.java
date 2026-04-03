@@ -26,26 +26,8 @@ public class KamikazeStick extends ZanyItem {
 	public void leftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-	}
-
 	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 		player.getWorld().createExplosion(player.getLocation(), 200.0F, true, true);
 		player.setHealth(0.0);
-	}
-
-	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void rightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 }

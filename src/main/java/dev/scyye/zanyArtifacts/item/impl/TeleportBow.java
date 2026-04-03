@@ -29,28 +29,10 @@ public class TeleportBow extends ZanyItem implements ZanyBow {
 	public void leftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
-	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-	}
 
-	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
+	@Override
+	public void onShoot(ItemStack var1, EntityShootBowEvent var2, Player var3) {
 
-	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void rightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
 	}
 
 	public void onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {

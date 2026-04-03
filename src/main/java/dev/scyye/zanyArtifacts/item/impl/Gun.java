@@ -5,7 +5,10 @@
 
 package dev.scyye.zanyArtifacts.item.impl;
 
+import java.util.List;
 import java.util.Objects;
+
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -29,25 +32,29 @@ public class Gun extends ZanyItem implements ZanyBow {
 
 	public Gun(String id, ItemStack itemStack, int amount, String displayName, boolean unbreakable, EnchantmentData[] enchantments, AttributeData[] attributes, ItemFlag[] itemFlags, String[] lore, AbilityMeta[] abilities) {
 		super(id, itemStack, amount, displayName, unbreakable, enchantments, attributes, itemFlags, lore, abilities);
+		this.key = Main.getKey("ammo");
 	}
 
 
 	public void onShoot(ItemStack bow, EntityShootBowEvent event, Player player) {
-		this.setAmmo(this.getAmmo() - 1);
-		player.sendMessage("Current Ammo: " + this.getAmmo());
-		if (this.getAmmo() < 0) {
+		if (this.getAmmo() <= 0) {
 			player.sendMessage("Reload by left clicking!");
-			player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
+			assert event.getConsumable() != null;
+			player.getInventory().addItem(event.getConsumable());
 			event.setCancelled(true);
+			return;
 		}
-
+		this.setAmmo(this.getAmmo() - 1);
+		if (this.getAmmo() < 0) {
+			this.setAmmo(0);
+		}
+		player.sendMessage("Current Ammo: " + this.getAmmo());
 	}
 
 	public void onLand(boolean block, ItemStack bow, ProjectileHitEvent event, Player player) {
 	}
 
 	public void onItemCreate(ItemStack itemStack) {
-		this.key = new NamespacedKey(Main.plugin, "ammo");
 		itemStack.getItemMeta().getPersistentDataContainer().set(this.key, PersistentDataType.INTEGER, 6);
 		this.getRawItem().setItemMeta(itemStack.getItemMeta());
 	}
@@ -64,29 +71,18 @@ public class Gun extends ZanyItem implements ZanyBow {
 		return Objects.requireNonNullElse(ammo, 0);
 	}
 
+	@Override
 	public void leftClickAirAction(Player player, ItemStack itemStack) {
 		this.setAmmo(6);
 	}
 
-	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		this.leftClickAirAction(player, itemStack);
-	}
-
-	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void rightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
+	@Override
+	public void updateItem(Player player, ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		List<Component> lore = meta.lore();
+		assert lore != null;
+		lore.set(0, Component.text("Ammo: " + this.getAmmo()));
+		meta.lore(lore);
+		item.setItemMeta(meta);
 	}
 }

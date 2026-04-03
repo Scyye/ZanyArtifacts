@@ -5,26 +5,21 @@
 
 package dev.scyye.zanyArtifacts.command;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import dev.scyye.zanyArtifacts.Main;
 import dev.scyye.zanyArtifacts.Utils;
 import dev.scyye.zanyArtifacts.item.ZanyItem;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
 public class GiveCommand implements BasicCommand {
 	@Override
-	public void execute(CommandSourceStack source, String[] args) {
+	public void execute(CommandSourceStack source, String @NotNull [] args) {
 		if (!(source.getSender() instanceof Player player)) {
 			return;
 		}
@@ -32,11 +27,12 @@ public class GiveCommand implements BasicCommand {
 			player.sendMessage("Item '" + args[0] + "' doesn't exist, are you sure you spelt it correctly?");
 		}
 
-		Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(args[0]).createItem());
+		Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(args[0]).createItem(false));
 	}
 
 	@Override
-	public Collection<String> suggest(CommandSourceStack source, String[] args) {
+	@NotNull
+	public Collection<String> suggest(@NotNull CommandSourceStack source, String[] args) {
 		if (args.length==0) {
 			return ZanyItem.allItems.keySet();
 		}

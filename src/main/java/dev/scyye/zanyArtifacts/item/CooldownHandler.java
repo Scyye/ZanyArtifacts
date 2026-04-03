@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.UUID;
 
+@SuppressWarnings({"unused", "deprecation"})
 public class CooldownHandler {
 	public static double trim(double untrimmeded, int decimal) {
 		DecimalFormat twoDec = new DecimalFormat("#.#" + "#".repeat(Math.max(0, decimal - 1)));

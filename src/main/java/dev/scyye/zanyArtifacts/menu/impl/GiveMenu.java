@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -23,16 +24,12 @@ public class GiveMenu extends Menu {
 	public void init(Player player) {
 		for (var entry : ZanyItem.allItems.entrySet()) {
 			var item = entry.getValue();
-			ItemStack menuItem = item.createItem();
+			ItemStack menuItem = item.createItem(true);
+			menuItem.setAmount(1);
 			menuItem.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.plugin, "menu"),
-					org.bukkit.persistence.PersistentDataType.STRING, "give-" + entry.getKey());
-			this.getInventory().addItem(item.createItem());
+					PersistentDataType.STRING, "give-" + entry.getKey());
+			this.getInventory().addItem(menuItem);
 		}
-	}
-
-	@Override
-	public void update(List<HumanEntity> viewers) {
-
 	}
 
 	@Override
@@ -42,11 +39,11 @@ public class GiveMenu extends Menu {
 		if (clickedItem == null) return;
 		if (clickedItem.getItemMeta() == null) return;
 		if (clickedItem.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(Main.plugin, "menu"),
-				org.bukkit.persistence.PersistentDataType.STRING)) {
+				PersistentDataType.STRING)) {
 			String[] data = clickedItem.getItemMeta().getPersistentDataContainer()
-					.get(new NamespacedKey(Main.plugin, "menu"), org.bukkit.persistence.PersistentDataType.STRING).split("-");
+					.get(new NamespacedKey(Main.plugin, "menu"), PersistentDataType.STRING).split("-");
 			if (data[0].equals("give")) {
-				Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(data[1]).createItem());
+				Utils.givePlayerItemSafely(player, ZanyItem.allItems.get(data[1]).createItem(false));
 				event.setCancelled(true);
 			}
 		}

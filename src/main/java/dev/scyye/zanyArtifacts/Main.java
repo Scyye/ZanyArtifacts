@@ -1,5 +1,6 @@
 package dev.scyye.zanyArtifacts;
 
+import dev.scyye.zanyArtifacts.command.CreateRecipe;
 import dev.scyye.zanyArtifacts.command.GiveCommand;
 import dev.scyye.zanyArtifacts.command.MenuCommand;
 import dev.scyye.zanyArtifacts.enchant.impl.*;
@@ -8,6 +9,7 @@ import dev.scyye.zanyArtifacts.item.impl.*;
 import dev.scyye.zanyArtifacts.menu.Menu;
 import dev.scyye.zanyArtifacts.menu.MenuListener;
 import dev.scyye.zanyArtifacts.menu.impl.GiveMenu;
+import dev.scyye.zanyArtifacts.menu.standalone.CraftCreator;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys;
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
@@ -28,28 +30,34 @@ import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
 
 import static dev.scyye.zanyArtifacts.enchant.EnchantmentListener.getZanyEnchants;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "unchecked"})
 public class Main extends JavaPlugin {
 	public static Main plugin;
 
 	public void onEnable() {
 		plugin = this;
 
+		saveDefaultConfig();
 
 		// Register Listeners
 		Bukkit.getPluginManager().registerEvents(new ItemListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new EnchantmentListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new MenuListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new CraftCreator(), plugin);
+		Bukkit.getPluginManager().registerEvents(new Bullet.BulletListener(), plugin);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
 				event -> {
 					event.registrar().register("zanygive", new GiveCommand());
 					event.registrar().register("menu", new MenuCommand());
+					event.registrar().register("createrecipe", new CreateRecipe());
 				}
 		);
 
-		this.registerItems();
+		registerItems();
+		registerMenus();
+
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setInvulnerable(false);
@@ -70,12 +78,8 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, CooldownHandler.Cooldown::handleCooldowns, 1L, 1L);
 	}
 
-	public void onDisable() {
-	}
-
-	public void registerItems() {
-		ZanyItem testItem = new TestItem("test_item", new ItemStack(Material.IRON_AXE), 1, "Super Cool Test Item", true, new EnchantmentData[]{new EnchantmentData(Enchantment.SHARPNESS, 2)}, new AttributeData[0], new ItemFlag[0], new String[]{"&6This is super cool lore", "&5And here's another line!"}, new ZanyItem.AbilityMeta[0]);
-		(new ZanyRecipe(true, testItem)).setRecipe(new ItemStack(Material.STRING), new ItemStack(Material.STRING), new ItemStack(Material.STRING), new ItemStack(Material.AIR), new ItemStack(Material.STICK), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.STICK), new ItemStack(Material.AIR));
+	private static void registerItems() {
+		new TestItem("test_item", new ItemStack(Material.IRON_AXE), 1, "Super Cool Test Item", true, new EnchantmentData[]{new EnchantmentData(Enchantment.SHARPNESS, 2)}, new AttributeData[0], new ItemFlag[0], new String[]{"&6This is super cool lore", "&5And here's another line!"}, new ZanyItem.AbilityMeta[0]);
 		new ExplosiveStick("explosive_stick", new ItemStack(Material.TORCH), 1, "&cExplosive Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4Hitting a Block Will", "&4Cause a Mighty Explosion"}, new ZanyItem.AbilityMeta[0]);
 		new TechnobladeSword("technoblade_sword", new ItemStack(Material.GOLDEN_SWORD), 1, "&bTechnoblade &6Sword", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Uses the power of &6THE BLADE", "&7to summon pigmen when you", "&7left click!", "&7Right click to remove them", "", "&6R.I.P Your Majesty."}, new ZanyItem.AbilityMeta[]{
 				new ZanyItem.AbilityMeta(
@@ -95,14 +99,23 @@ public class Main extends JavaPlugin {
 						0
 				)
 		});
-		new Gun("gun", new ItemStack(Material.BOW), 1, "&7&lTHE RETURN OF THE GUN", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Left click to reload", "&2Max ammo: 6"}, new ZanyItem.AbilityMeta[0]);
+		new TestBullet("test_bullet", new ZanyItem.AbilityMeta[0]);
+		new Gun("gun", new ItemStack(Material.BOW), 1, "&7&lTHE RETURN OF THE GUN", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"","&7Left click to reload", "&2Max ammo: 6"}, new ZanyItem.AbilityMeta[0]);
 		new TeleportBow("teleport_bow", new ItemStack(Material.BOW), 1, "&dTeleport Bow", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Teleport to where the arrow lands!"}, new ZanyItem.AbilityMeta[0]);
 		new KamikazeStick("kamikaze_stick", new ItemStack(Material.STICK), 1, "&4Kamikaze Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4click a block to kamikaze yo ass"}, new ZanyItem.AbilityMeta[0]);
 		new FlashBang("flash_bang", new ItemStack(Material.SOUL_LANTERN), 6, "&fFlash Bang", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, new String[]{"&2Click anywhere to flashbang people in a 5 block radius"}, new ZanyItem.AbilityMeta[0]);
+		new TimeCrystal("time_crystal", new ItemStack(Material.GLASS_BOTTLE), 1, "&5Time Crystal", true, new EnchantmentData[]{new EnchantmentData(Enchantment.AQUA_AFFINITY, 1)}, new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ENCHANTS}, new String[]{"","&7A mysterious crystal that seems to", "&7manipulate time itself."}, new ZanyItem.AbilityMeta[]{
+				new ZanyItem.AbilityMeta(
+						"rewind_time",
+						"Rewinds time by 30 seconds",
+						ZanyItem.AbilityMeta.AbilityType.CLICK,
+						false,
+						false,
+						6000
+				)
+		});
 
-		for (ZanyItem item : ZanyItem.allItems.values()) {
-			item.updateLore();
-		}
+		RecipeManager.init();
 	}
 
 	public static void registerEnchants() {
@@ -142,24 +155,6 @@ public class Main extends JavaPlugin {
 		);
 
 		ZanyEnchant.createBasicEnchant(
-				GroundSlamEnchant.class,
-				Component.text("Ground Slam"),
-				5,
-				new EquipmentSlotGroup[]{EquipmentSlotGroup.FEET},
-				new TagKey[]{ItemTypeTagKeys.FOOT_ARMOR, ItemTypeTagKeys.ENCHANTABLE_FOOT_ARMOR},
-				new TagKey[]{EnchantmentTagKeys.TRADES_PLAINS_COMMON}
-		);
-
-		ZanyEnchant.createBasicEnchant(
-				ReflectionEnchant.class,
-				Component.text("Reflection"),
-				3,
-				new EquipmentSlotGroup[]{EquipmentSlotGroup.ARMOR},
-				new TagKey[]{ItemTypeTagKeys.ENCHANTABLE_ARMOR},
-				null
-		);
-
-		ZanyEnchant.createBasicEnchant(
 				MurderEnchant.class,
 				Component.text("Murder"),
 				1,
@@ -169,7 +164,7 @@ public class Main extends JavaPlugin {
 		);
 	}
 
-	public static void registerMenus() {
+	private static void registerMenus() {
 		Menu giveMenu = new GiveMenu(
 				InventoryType.CHEST,
 				"Item GUI",

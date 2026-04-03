@@ -41,14 +41,8 @@ public class TechnobladeSword extends ZanyItem {
 		piglin.setCustomNameVisible(true);
 	}
 
-	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
-	}
-
 	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 		this.leftClickAirAction(player, itemStack);
-	}
-
-	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 
 	public void rightClickAirAction(Player player, ItemStack itemStack) {
@@ -60,15 +54,5 @@ public class TechnobladeSword extends ZanyItem {
 			}
 		}
 
-	}
-
-	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-		this.rightClickAirAction(player, itemStack);
-	}
-
-	public void shiftRightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 	}
 }

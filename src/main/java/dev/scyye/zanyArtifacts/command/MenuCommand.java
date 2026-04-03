@@ -29,7 +29,10 @@ public class MenuCommand implements BasicCommand {
 	@Override
 	@NotNull
 	public Collection<String> suggest(@NotNull CommandSourceStack commandSourceStack, String @NotNull [] args) {
-		return BasicCommand.super.suggest(commandSourceStack, args);
+		if (args.length == 0) {
+			return Menu.allMenus.keySet();
+		}
+		return Menu.allMenus.keySet().stream().filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).toList();
 	}
 
 	@Override

@@ -22,7 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-@Deprecated
+@Deprecated(forRemoval = true)
+@SuppressWarnings("UnstableApiUsage")
 public class GroundSlamEnchant extends ZanyEnchant {
 
 	// Tracks the starting Y-coordinates of players who are falling

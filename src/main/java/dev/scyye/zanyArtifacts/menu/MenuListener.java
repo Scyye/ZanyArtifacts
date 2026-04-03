@@ -14,6 +14,8 @@ public class MenuListener implements Listener {
 		for (var menu : Menu.allMenus.values()) {
 			if (event.getCurrentItem() == null)
 				return;
+			if (event.getCurrentItem().getItemMeta() == null)
+				return;
 			if (Objects.equals(event.getCurrentItem().getItemMeta().getPersistentDataContainer()
 					.get(Main.getKey("menu"), PersistentDataType.STRING), "placeholder"))
 				event.setCancelled(true);

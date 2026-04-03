@@ -41,7 +41,7 @@ import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "unchecked"})
 public abstract class ZanyEnchant {
 	public static HashMap<String, ZanyEnchant> allEnchants = new HashMap<>();
 
@@ -98,44 +98,15 @@ public abstract class ZanyEnchant {
 		allEnchants.put(getId(), this);
 	}
 
-	public static <T extends ZanyEnchant> T createBasicEnchant(Class<T> type, TextComponent display, int maxLevel, @Nullable EquipmentSlotGroup[] activeSlots,
-																	@Nullable TagKey<ItemType>[] supportedItemTags, @Nullable TagKey<Enchantment>[] enchantmentTags) {
+	public static <T extends ZanyEnchant> void createBasicEnchant(Class<T> type, TextComponent display, int maxLevel, @Nullable EquipmentSlotGroup[] activeSlots,
+																  @Nullable TagKey<ItemType>[] supportedItemTags, @Nullable TagKey<Enchantment>[] enchantmentTags) {
 		try {
-			return type.getConstructor(TextComponent.class, int.class, int.class, int.class, int.class, int.class, int.class,
-					EquipmentSlotGroup[].class, TagKey[].class, TagKey[].class)
+			type.getConstructor(TextComponent.class, int.class, int.class, int.class, int.class, int.class, int.class,
+							EquipmentSlotGroup[].class, TagKey[].class, TagKey[].class)
 					.newInstance(display, -1, maxLevel, -1, -1, -1, -1, activeSlots, supportedItemTags, enchantmentTags);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return (T) emptyEnchant();
 		}
-	}
-
-	private static ZanyEnchant emptyEnchant() {
-		return new ZanyEnchant(Component.text("Empty"), 0, 1, 1, 0, 0, 0, new EquipmentSlotGroup[] {EquipmentSlotGroup.HAND}, new TagKey[] {ItemTypeTagKeys.SWORDS}, new TagKey[] {EnchantmentTagKeys.create(Key.key("zany:zany_only"))}) {
-			@Override
-			public void onBreakBlock(Block block, ItemStack item, BlockBreakEvent event) {
-			}
-
-			@Override
-			public void onMove(PlayerMoveEvent event, Location location) {
-			}
-
-			@Override
-			public void onHitEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
-			}
-
-			@Override
-			public void onKillEntity(Entity entity, ItemStack item, EntityDamageEvent.DamageCause cause, EntityDeathEvent event) {
-			}
-
-			@Override
-			public void onGetHit(LivingEntity entity, EntityDamageEvent.DamageCause cause, EntityDamageByEntityEvent event) {
-			}
-
-			@Override
-			public void constantEffect(Player entity, ItemStack item) {
-			}
-		};
 	}
 
 	private <T> T[] orElse(@Nullable T[] value, @Nonnull T[] defaultValue) {

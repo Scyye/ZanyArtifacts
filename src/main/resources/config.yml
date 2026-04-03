@@ -1,0 +1,38 @@
+recipes:
+  - test_item:
+      id: test_item
+      ingredients:
+        - STRING
+        - STRING
+        - STRING
+        - AIR
+        - STICK
+        - AIR
+        - AIR
+        - STICK
+        - AIR
+      result: test_item
+      isShaped: true
+      resultAmount: 1
+  - test_item_two:
+      id: test_item_two
+      ingredients:
+          - test_item
+          - STRING
+          - STRING
+          - AIR
+          - STICK
+          - AIR
+          - AIR
+          - STICK
+          - AIR
+      result: test_item
+      isShaped: true
+      resultAmount: 1
+  - test_item_three:
+      id: test_item_three
+      ingredients:
+        - test_item
+      result: test_item
+      isShaped: false
+      resultAmount: 1

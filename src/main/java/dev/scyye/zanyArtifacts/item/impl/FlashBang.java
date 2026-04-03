@@ -26,39 +26,4 @@ public class FlashBang extends ZanyItem {
 	public void leftClickAirAction(Player player, ItemStack var2) {
 		player.getLocation().getNearbyPlayers(5).forEach(p -> p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 5, true, false, false)));
 	}
-
-	@Override
-	public void shiftLeftClickAirAction(Player var1, ItemStack var2) {
-		leftClickAirAction(var1, var2);
-	}
-
-	@Override
-	public void leftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
-		leftClickAirAction(var1, var4);
-	}
-
-	@Override
-	public void shiftLeftClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
-		leftClickAirAction(var1, var4);
-	}
-
-	@Override
-	public void rightClickAirAction(Player var1, ItemStack var2) {
-		leftClickAirAction(var1, var2);
-	}
-
-	@Override
-	public void shiftRightClickAirAction(Player var1, ItemStack var2) {
-		leftClickAirAction(var1, var2);
-	}
-
-	@Override
-	public void rightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
-		leftClickAirAction(var1, var4);
-	}
-
-	@Override
-	public void shiftRightClickBlockAction(Player var1, PlayerInteractEvent var2, Block var3, ItemStack var4) {
-		leftClickAirAction(var1, var4);
-	}
 }

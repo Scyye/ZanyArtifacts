@@ -23,23 +23,13 @@ public class ExplosiveStick extends ZanyItem {
 	public void onItemCreate(ItemStack itemStack) {
 	}
 
-	public void leftClickAirAction(Player player, ItemStack itemStack) {
-	}
+	@Override
+	public void leftClickAirAction(Player var1, ItemStack var2) {
 
-	public void shiftLeftClickAirAction(Player player, ItemStack itemStack) {
 	}
 
 	public void leftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
 		player.getWorld().createExplosion(block.getLocation(), 6.0F, false, true);
-	}
-
-	public void shiftLeftClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {
-	}
-
-	public void rightClickAirAction(Player player, ItemStack itemStack) {
-	}
-
-	public void shiftRightClickAirAction(Player player, ItemStack itemStack) {
 	}
 
 	public void rightClickBlockAction(Player player, PlayerInteractEvent event, Block block, ItemStack itemStack) {

@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemType;
 import java.util.List;
 import java.util.UUID;
 
+@Deprecated(forRemoval = true)
 @SuppressWarnings("UnstableApiUsage")
 public class ReflectionEnchant extends ZanyEnchant {
 	/**
