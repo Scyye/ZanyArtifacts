@@ -28,10 +28,16 @@ public class CooldownHandler {
 
 	public static double convert(long time, TimeUnit unit, int decPoint) {
 		if(unit == TimeUnit.BEST) {
-			if(time < 60000L) unit = TimeUnit.SECONDS;
-			else if(time < 3600000L) unit = TimeUnit.MINUTES;
-			else if(time < 86400000L) unit = TimeUnit.HOURS;
-			else unit = TimeUnit.DAYS;
+			// Use ordinary conditional checks instead of preview pattern matching switch
+			if (time < 60000L) {
+				unit = TimeUnit.SECONDS;
+			} else if (time < 3600000L) {
+				unit = TimeUnit.MINUTES;
+			} else if (time < 86400000L) {
+				unit = TimeUnit.HOURS;
+			} else {
+				unit = TimeUnit.DAYS;
+			}
 		}
 		if(unit == TimeUnit.SECONDS) return trim(time / 1000.0D, decPoint);
 		if(unit == TimeUnit.MINUTES) return trim(time / 60000.0D, decPoint);

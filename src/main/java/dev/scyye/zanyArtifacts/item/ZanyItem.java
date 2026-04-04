@@ -91,11 +91,12 @@ public abstract class ZanyItem extends ItemStack {
 		meta.setUnbreakable(this.unbreakable);
 		List<TextComponent> lore = new ArrayList<>();
 
-		for(String line : this.lore) {
-			lore.add(colorizeString(line));
-		}
+
 		for (AbilityMeta ability : this.abilities) {
 			lore.addAll(ability.buildAbilityLoreString());
+		}
+		for(String line : this.lore) {
+			lore.add(colorizeString(line));
 		}
 
 		meta.lore(lore);
@@ -130,7 +131,8 @@ public abstract class ZanyItem extends ItemStack {
 			LEFT_CLICK,
 			RIGHT_CLICK,
 			CLICK,
-			CONSTANT
+			CONSTANT,
+			PET
 		}
 
 		String name;
@@ -152,17 +154,34 @@ public abstract class ZanyItem extends ItemStack {
 		List<TextComponent> buildAbilityLoreString() {
 			List<TextComponent> abilityLore = new ArrayList<>();
 
-			abilityLore.add(Component.text("Ability: " + name.toUpperCase().replaceAll("_", " ")+" ", TextColor.color(0xe3c70e), TextDecoration.BOLD)
-					.append(Component.text((shift?"SHIFT ":"") + type.name().replaceAll("_", " "),
-							TextColor.color(0xc7e30e)))
-					.append(Component.text(consume?" [CONSUMES ITEM]":"",
-							TextColor.color(0xE30008))));
-			abilityLore.add(Component.text(description,
-					TextColor.color(0x7f7f7f)));
-			if (cooldownMs > 0)
-				abilityLore.add(Component.text("Cooldown: " + Utils.round(cooldownMs/1000, 2) + "s",
-					TextColor.color(0xe32110)));
-			abilityLore.add(Component.newline());
+			if (this.type == AbilityType.PET) {
+				abilityLore.add(Component.text("Pet Ability: " + name.toUpperCase().replaceAll("_", " ")+" ", TextColor.color(0x0ee3c7), TextDecoration.BOLD));
+				abilityLore.add(Component.text(description,
+						TextColor.color(0x7f7f7f)));
+				abilityLore.add(Component.text("Pet abilities are active when in your inventory or your pet bag"));
+			}
+			else {
+				abilityLore.add(Component.text("Ability: " + name.toUpperCase().replaceAll("_", " ")+" ", TextColor.color(0xe3c70e), TextDecoration.BOLD)
+						.append(Component.text((shift?"SHIFT ":"") + type.name().replaceAll("_", " "),
+								TextColor.color(0xc7e30e)))
+						.append(Component.text(consume?" [CONSUMES ITEM]":"",
+								TextColor.color(0xE30008))));
+				abilityLore.add(Component.text(description,
+						TextColor.color(0x7f7f7f)));
+			}
+
+
+			if (cooldownMs > 0) {
+
+				// pretify to (MM)m:(SS)s
+				int totalSeconds = (int) (cooldownMs / 1000);
+				int minutes = totalSeconds / 60;
+				int seconds = totalSeconds % 60;
+				String cooldownString = (minutes > 0 ? minutes + "m:" : "") +
+						(seconds > 0 ? seconds + "s" : "");
+				abilityLore.add(Component.text("Cooldown: " + cooldownString, TextColor.color(0x7f7f7f)));
+			}
+			abilityLore.add(Component.text(" ", TextColor.color(0x000000)));
 			return abilityLore;
 		}
 	}

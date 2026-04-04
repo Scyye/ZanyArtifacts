@@ -6,6 +6,9 @@ import dev.scyye.zanyArtifacts.command.MenuCommand;
 import dev.scyye.zanyArtifacts.enchant.impl.*;
 import dev.scyye.zanyArtifacts.item.*;
 import dev.scyye.zanyArtifacts.item.impl.*;
+import dev.scyye.zanyArtifacts.item.impl.pets.Chicken;
+import dev.scyye.zanyArtifacts.item.impl.pets.FeedingBag;
+import dev.scyye.zanyArtifacts.item.impl.pets.Ocelot;
 import dev.scyye.zanyArtifacts.menu.Menu;
 import dev.scyye.zanyArtifacts.menu.MenuListener;
 import dev.scyye.zanyArtifacts.menu.impl.GiveMenu;
@@ -75,6 +78,19 @@ public class Main extends JavaPlugin {
 				}
 			}
 		}, 1L, 1L);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				for (ItemStack item : p.getInventory()) {
+					if (item == null)
+						continue;
+					if (!Utils.isZany(item))
+						continue;
+					ZanyItem zanyItem = Utils.getZany(item);
+					if (zanyItem.getId().startsWith("pet_"))
+						((ZanyPet) zanyItem).effect(p, (ZanyPet) zanyItem);
+				}
+			}
+		}, 1, 1);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, CooldownHandler.Cooldown::handleCooldowns, 1L, 1L);
 	}
 
@@ -115,6 +131,67 @@ public class Main extends JavaPlugin {
 				)
 		});
 
+		new Chicken("chicken", "Zachary_l19876", false,
+				new ZanyItem.AbilityMeta[]{
+						new ZanyItem.AbilityMeta(
+								"lay_egg",
+								"Lay Egg",
+								ZanyItem.AbilityMeta.AbilityType.PET,
+								false,
+								false,
+								1000 * 60 * 2
+						),
+						new ZanyItem.AbilityMeta(
+								"speed_boost",
+								"Speed Boost",
+								ZanyItem.AbilityMeta.AbilityType.PET,
+								false,
+								false,
+								0
+						)
+				});
+		new Ocelot("ocelot", "TheOcelott", false,
+				new ZanyItem.AbilityMeta[]{
+						new ZanyItem.AbilityMeta(
+								"oooohh_scawwy",
+								"Scares away creepers around you",
+								ZanyItem.AbilityMeta.AbilityType.PET,
+								false,
+								false,
+								0
+						),
+						new ZanyItem.AbilityMeta(
+								"night_vision",
+								"Grants you Night Vision",
+								ZanyItem.AbilityMeta.AbilityType.PET,
+								false,
+								false,
+								0
+						)
+				});
+
+		new FeedingBag(
+				"feeding_bag",
+				new ItemStack(Material.BONE),
+				1,
+				"&6Feeding Bag",
+				true,
+				new EnchantmentData[0],
+				new AttributeData[0],
+				new ItemFlag[0],
+				new String[]{"&7A bag that can hold food for your pets."},
+				new ZanyItem.AbilityMeta[]{
+						new ZanyItem.AbilityMeta(
+								"open_feeding_bag",
+								"Open your feeding bag",
+								ZanyItem.AbilityMeta.AbilityType.CLICK,
+								false,
+								false,
+								0
+						)
+				}
+		);
+
 		RecipeManager.init();
 	}
 
@@ -132,7 +209,7 @@ public class Main extends JavaPlugin {
 				Component.text("Explosive Touch"),
 				7,
 				new EquipmentSlotGroup[]{EquipmentSlotGroup.ANY},
-				new TagKey[]{ItemTypeTagKeys.SWORDS, ItemTypeTagKeys.AXES, ItemTypeTagKeys.PICKAXES, ItemTypeTagKeys.HOES, ItemTypeTagKeys.SHOVELS, ItemTypeTagKeys.ENCHANTABLE_SWORD, ItemTypeTagKeys.ENCHANTABLE_WEAPON, ItemTypeTagKeys.ENCHANTABLE_MINING},
+				new TagKey[]{ItemTypeTagKeys.SWORDS, ItemTypeTagKeys.AXES, ItemTypeTagKeys.PICKAXES, ItemTypeTagKeys.HOES, ItemTypeTagKeys.SHOVELS, ItemTypeTagKeys.ENCHANTABLE_WEAPON, ItemTypeTagKeys.ENCHANTABLE_MINING},
 				new TagKey[]{EnchantmentTagKeys.ON_MOB_SPAWN_EQUIPMENT}
 		);
 
