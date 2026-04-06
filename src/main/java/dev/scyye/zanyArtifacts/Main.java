@@ -6,9 +6,7 @@ import dev.scyye.zanyArtifacts.command.MenuCommand;
 import dev.scyye.zanyArtifacts.enchant.impl.*;
 import dev.scyye.zanyArtifacts.item.*;
 import dev.scyye.zanyArtifacts.item.impl.*;
-import dev.scyye.zanyArtifacts.item.impl.pets.Chicken;
-import dev.scyye.zanyArtifacts.item.impl.pets.FeedingBag;
-import dev.scyye.zanyArtifacts.item.impl.pets.Ocelot;
+import dev.scyye.zanyArtifacts.item.impl.pets.*;
 import dev.scyye.zanyArtifacts.menu.Menu;
 import dev.scyye.zanyArtifacts.menu.MenuListener;
 import dev.scyye.zanyArtifacts.menu.impl.GiveMenu;
@@ -48,6 +46,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new MenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new CraftCreator(), plugin);
 		Bukkit.getPluginManager().registerEvents(new Bullet.BulletListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new FeedingBag.FeedingBagSaveEvent(), plugin);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
@@ -192,7 +191,41 @@ public class Main extends JavaPlugin {
 				}
 		);
 
-		RecipeManager.init();
+		new EnderChest(
+				"ender_chest",
+				"MHF_EnderChest",
+				false,
+				new ZanyItem.AbilityMeta[]{
+						new ZanyItem.AbilityMeta(
+								"open_ender_chest",
+								"Open your ender chest",
+								ZanyItem.AbilityMeta.AbilityType.CLICK,
+								false,
+								false,
+								0
+						)
+				},
+				"&a5I wonder how this works...&r"
+		);
+
+		new Notch(
+				"notch",
+				"Notch",
+				true,
+				new ZanyItem.AbilityMeta[]{
+						new ZanyItem.AbilityMeta(
+								"god_mode",
+								"Negates all damage.. at a hefty price",
+								ZanyItem.AbilityMeta.AbilityType.PET,
+								false,
+								false,
+								1000 * 10
+						)
+				},
+				"Negated 0 damage"
+		);
+
+		//RecipeManager.init();
 	}
 
 	public static void registerEnchants() {

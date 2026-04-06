@@ -28,7 +28,7 @@ public class Ocelot extends ZanyPet {
 				Vector away = creeperLoc.toVector()
 						.subtract(playerLoc.toVector())
 						.normalize()
-						.multiply(15); // move 6 blocks away
+						.multiply(15);
 
 				Location fleeTo = creeperLoc.clone().add(away);
 

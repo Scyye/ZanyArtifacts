@@ -515,8 +515,8 @@ public abstract class ZanyItem extends ItemStack {
 	}
 
 	@Override
-	public @NotNull ItemStack clone() {
-		return itemStack.clone();
+	public @NotNull ZanyItem clone() {
+		return Utils.getZany(itemStack.clone());
 	}
 
 	@Override

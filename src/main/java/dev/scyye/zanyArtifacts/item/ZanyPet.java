@@ -27,7 +27,7 @@ public abstract class ZanyPet extends ZanyItem{
 		super("pet_" + id, head, 1, "&6"+prettify(id)+" Pet", true, glow ? new EnchantmentData[]{new EnchantmentData(Enchantment.UNBREAKING, 1)} : new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ENCHANTS}, lore, abilities);
 	}
 
-	public ZanyPet(String id, ItemStack itemStack, int amount, String displayName, boolean unbreakable, EnchantmentData[] enchantments, AttributeData[] attributes, ItemFlag[] itemFlags, String[] lore, AbilityMeta[] abilities) {
+	private ZanyPet(String id, ItemStack itemStack, int amount, String displayName, boolean unbreakable, EnchantmentData[] enchantments, AttributeData[] attributes, ItemFlag[] itemFlags, String[] lore, AbilityMeta[] abilities) {
 		super(id, itemStack, amount, displayName, unbreakable, enchantments, attributes, itemFlags, lore, abilities);
 	}
 

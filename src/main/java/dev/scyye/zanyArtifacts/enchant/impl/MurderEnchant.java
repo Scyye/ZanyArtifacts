@@ -9,7 +9,10 @@ package dev.scyye.zanyArtifacts.enchant.impl;
 import dev.scyye.zanyArtifacts.Main;
 import dev.scyye.zanyArtifacts.enchant.ZanyEnchant;
 import io.papermc.paper.registry.tag.TagKey;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -91,8 +94,10 @@ public class MurderEnchant extends ZanyEnchant {
 		player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, false, false, false));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 3, false, false, false));
 		player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK_ROCKET, true);
-		Bukkit.getScheduler().runTaskLater(Main.plugin, () ->
-				player.damage(Double.MAX_VALUE), 195L);
+		Bukkit.getScheduler().runTaskLater(Main.plugin, p -> {
+			player.setHealth(0);
+			player.kick(Component.text(":)").append(Component.text("a", Style.style(TextDecoration.OBFUSCATED))));
+		}, 5L);
 		player.setInvulnerable(false);
 	}
 }
