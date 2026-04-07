@@ -42,8 +42,6 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
 public abstract class ZanyItem extends ItemStack {
-	public static HashMap<String, ZanyItem> allItems = new HashMap<>();
-
 	ItemStack itemStack;
 	int amount;
 	String displayName;
@@ -71,7 +69,6 @@ public abstract class ZanyItem extends ItemStack {
 		this.lore = lore;
 		this.abilities = abilities;
 		this.createItem(true);
-		allItems.put(this.id, this);
 	}
 
 	public ItemStack createItem(boolean init) {

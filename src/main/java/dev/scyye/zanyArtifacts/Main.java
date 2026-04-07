@@ -57,8 +57,9 @@ public class Main extends JavaPlugin {
 				}
 		);
 
-		registerItems();
+		//registerItems();
 		registerMenus();
+		ItemRegister.startRegistration();
 
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
@@ -119,7 +120,7 @@ public class Main extends JavaPlugin {
 		new TeleportBow("teleport_bow", new ItemStack(Material.BOW), 1, "&dTeleport Bow", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&7Teleport to where the arrow lands!"}, new ZanyItem.AbilityMeta[0]);
 		new KamikazeStick("kamikaze_stick", new ItemStack(Material.STICK), 1, "&4Kamikaze Stick", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[0], new String[]{"&4click a block to kamikaze yo ass"}, new ZanyItem.AbilityMeta[0]);
 		new FlashBang("flash_bang", new ItemStack(Material.SOUL_LANTERN), 6, "&fFlash Bang", true, new EnchantmentData[0], new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, new String[]{"&2Click anywhere to flashbang people in a 5 block radius"}, new ZanyItem.AbilityMeta[0]);
-		new TimeCrystal("time_crystal", new ItemStack(Material.GLASS_BOTTLE), 1, "&5Time Crystal", true, new EnchantmentData[]{new EnchantmentData(Enchantment.AQUA_AFFINITY, 1)}, new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ENCHANTS}, new String[]{"","&7A mysterious crystal that seems to", "&7manipulate time itself."}, new ZanyItem.AbilityMeta[]{
+		new TimeCrystal("time_crystal", new ItemStack(Material.GLASS_BOTTLE), 1, "&5Time Crystal", true, new EnchantmentData[]{new EnchantmentData(Enchantment.AQUA_AFFINITY, 1)}, new AttributeData[0], new ItemFlag[]{ItemFlag.HIDE_ENCHANTS}, new String[]{"",	"&7A mysterious crystal that seems to", "&7manipulate time itself."}, new ZanyItem.AbilityMeta[]{
 				new ZanyItem.AbilityMeta(
 						"rewind_time",
 						"Rewinds time by 30 seconds",
