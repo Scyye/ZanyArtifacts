@@ -5,6 +5,7 @@
 
 package dev.scyye.zanyArtifacts.item;
 
+import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,8 +19,62 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import dev.scyye.zanyArtifacts.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemListener implements Listener {
 	public ItemListener() {
+	}
+
+	@EventHandler(
+			priority = EventPriority.HIGH
+	)
+	private void onInventoryUpdate(PlayerInventorySlotChangeEvent event) {
+		Player player = event.getPlayer();
+		ItemStack oldItem = event.getOldItemStack();
+		ItemStack newItem = event.getNewItemStack();
+
+		// if neither old nor new item is zany, ignore
+		if (!Utils.isZany(oldItem) && !Utils.isZany(newItem))
+			return;
+
+		// Handle unequip: if an old item was a pet and player no longer has that pet anywhere -> unequip
+		if (oldItem.hasItemMeta() && Utils.isZany(oldItem) && Utils.getZany(oldItem) instanceof ZanyPet pet) {
+			boolean stillHas = false;
+			for (ItemStack is : player.getInventory()) {
+				if (is == null) continue;
+				ZanyItem zi = Utils.getZany(is);
+				if (zi != null && zi.getId().equals(pet.getId())) {
+					stillHas = true;
+					break;
+				}
+			}
+			if (!stillHas) {
+				try {
+					pet.unequip(player, pet);
+				} catch (Exception ignored) {}
+				List<ZanyPet> list = ZanyPet.currentPets.get(player);
+				if (list != null) {
+					list.removeIf(p -> p.getId().equals(pet.getId()));
+					if (list.isEmpty()) ZanyPet.currentPets.remove(player);
+				}
+			}
+		}
+
+
+
+		// Handle equip: if new item is a pet and player didn't already have it equipped -> equip
+		if (newItem.hasItemMeta() && Utils.isZany(newItem) && Utils.getZany(newItem) instanceof ZanyPet pet) {
+			List<ZanyPet> list = ZanyPet.currentPets.getOrDefault(player, new ArrayList<>());
+			boolean already = list.stream().anyMatch(p -> p.getId().equals(pet.getId()));
+			if (!already) {
+				try {
+					pet.equip(player, pet);
+				} catch (Exception ignored) {}
+				list.add(pet);
+				ZanyPet.currentPets.put(player, list);
+			}
+		}
 	}
 
 	@EventHandler(
