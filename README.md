@@ -5,7 +5,7 @@ A PaperMC plugin for Minecraft **1.21.11+** that adds a collection of custom ite
 
 > **Authors:** Scyye, Dark_Joe
 
-## For issues, don't hesitate to reach out: [https://scyye.dev/discord](https://scyye.dev/discord)
+## For issues, don't hesitate to reach out: https://discord.gg/pF3VagND3y
 ---
 
 ## 📋 Table of Contents
